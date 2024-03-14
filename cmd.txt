@@ -1,0 +1,23 @@
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/mvit/mvit-small-p244_k400-pre_8xb4-16x4x1-50e_ucf101-rgb.py 8 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/i3d/i3d_from-scratch-r50_4xb16-16x4x1-100e_ucf101-rgb.py 4 >nohup_1.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/i3d/i3d_k400-pretrained_4xb8-32x2x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py 4 >nohup_1.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb8-16x4x1-100e_ucf101-rgb.py 4 >nohup_2.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb16-16x4x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py ../mmrazor/work_dirs/kd_logits_i3d_top-i3d_4xb4-64x1x1_ucf101/best_acc_top1_epoch_93.pth 4 >nohup_1.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb.py ./work_dirs/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_64.pth 4 >nohup.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py ./work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb/best_acc_top1_epoch_21.pth 4 >nohup_test.log 2>&1 &

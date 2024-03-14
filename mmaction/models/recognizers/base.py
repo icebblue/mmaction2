@@ -37,7 +37,8 @@ class BaseRecognizer(BaseModel, metaclass=ABCMeta):
                  neck: OptConfigType = None,
                  train_cfg: OptConfigType = None,
                  test_cfg: OptConfigType = None,
-                 data_preprocessor: OptConfigType = None) -> None:
+                 data_preprocessor: OptConfigType = None,
+                 frames_downsample_rate: int = 1) -> None:
         if data_preprocessor is None:
             # This preprocessor will only stack batch data samples.
             data_preprocessor = dict(type='ActionDataPreprocessor')
@@ -123,6 +124,7 @@ class BaseRecognizer(BaseModel, metaclass=ABCMeta):
 
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
+        self.frames_downsample_rate = frames_downsample_rate
 
     @abstractmethod
     def extract_feat(self, inputs: torch.Tensor, **kwargs) -> ForwardResults:

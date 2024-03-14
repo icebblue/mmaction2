@@ -985,7 +985,7 @@ class SwinTransformer3D(BaseModule):
         else:
             if self.pretrained:
                 self.init_cfg = dict(
-                    type='Pretrained', checkpoint=self.pretrained)
+                    type='Pretrained', checkpoint=self.pretrained, prefix='backbone.')
             super().init_weights()
 
     def forward(self, x: torch.Tensor) -> \

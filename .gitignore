@@ -149,3 +149,5 @@ mmaction/tools/*
 !demo/*.ipynb
 !projects/stad_tutorial/*.ipynb
 mmaction/.mim
+
+work_dirs

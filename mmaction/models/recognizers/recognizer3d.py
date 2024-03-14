@@ -36,6 +36,9 @@ class Recognizer3D(BaseRecognizer):
         # Record the kwargs required by `loss` and `predict`
         loss_predict_kwargs = dict()
 
+        if self.frames_downsample_rate > 1:
+            inputs = inputs[..., ::self.frames_downsample_rate, :, :]
+
         num_segs = inputs.shape[1]
         # [N, num_crops, C, T, H, W] ->
         # [N * num_crops, C, T, H, W]

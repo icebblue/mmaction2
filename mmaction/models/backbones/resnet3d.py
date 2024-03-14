@@ -837,7 +837,7 @@ class ResNet3d(BaseModule):
             else:
                 # Directly load 3D model.
                 load_checkpoint(
-                    self, self.pretrained, strict=False, logger=logger)
+                    self, self.pretrained, strict=False, logger=logger, revise_keys=[(r'^backbone\.', '')])
 
         elif self.pretrained is None:
             for m in self.modules():
