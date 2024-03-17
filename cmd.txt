@@ -25,3 +25,4 @@ PORT=29666 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244
 
 # new commands
 python tools/train.py configs/recognition/i3d/i3d_k400-pretrained_1xb32-16x4x1-50e_ucf101-rgb.py
+python tools/train.py configs/recognition/timesformer/timesformer_jointST_k400-pretrained_1xb64-16x4x1-50e_ucf101-rgb.py

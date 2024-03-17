@@ -8,7 +8,7 @@ from mmcv.cnn.bricks.transformer import build_transformer_layer_sequence
 from mmengine import ConfigDict
 from mmengine.logging import MMLogger
 from mmengine.model.weight_init import kaiming_init, trunc_normal_
-from mmengine.runner.checkpoint import _load_checkpoint, load_state_dict
+from mmengine.runner.checkpoint import _load_checkpoint, load_state_dict, load_checkpoint
 from torch.nn.modules.utils import _pair
 
 from mmaction.registry import MODELS
@@ -235,29 +235,31 @@ class TimeSformer(nn.Module):
             logger = MMLogger.get_current_instance()
             logger.info(f'load model from: {self.pretrained}')
 
-            state_dict = _load_checkpoint(self.pretrained, map_location='cpu')
-            if 'state_dict' in state_dict:
-                state_dict = state_dict['state_dict']
+            # state_dict = _load_checkpoint(self.pretrained, map_location='cpu')
+            # if 'state_dict' in state_dict:
+            #     state_dict = state_dict['state_dict']
 
-            if self.attention_type == 'divided_space_time':
-                # modify the key names of norm layers
-                old_state_dict_keys = list(state_dict.keys())
-                for old_key in old_state_dict_keys:
-                    if 'norms' in old_key:
-                        new_key = old_key.replace('norms.0',
-                                                  'attentions.0.norm')
-                        new_key = new_key.replace('norms.1', 'ffns.0.norm')
-                        state_dict[new_key] = state_dict.pop(old_key)
+            # if self.attention_type == 'divided_space_time':
+            #     # modify the key names of norm layers
+            #     old_state_dict_keys = list(state_dict.keys())
+            #     for old_key in old_state_dict_keys:
+            #         if 'norms' in old_key:
+            #             new_key = old_key.replace('norms.0',
+            #                                       'attentions.0.norm')
+            #             new_key = new_key.replace('norms.1', 'ffns.0.norm')
+            #             state_dict[new_key] = state_dict.pop(old_key)
 
-                # copy the parameters of space attention to time attention
-                old_state_dict_keys = list(state_dict.keys())
-                for old_key in old_state_dict_keys:
-                    if 'attentions.0' in old_key:
-                        new_key = old_key.replace('attentions.0',
-                                                  'attentions.1')
-                        state_dict[new_key] = state_dict[old_key].clone()
+            #     # copy the parameters of space attention to time attention
+            #     old_state_dict_keys = list(state_dict.keys())
+            #     for old_key in old_state_dict_keys:
+            #         if 'attentions.0' in old_key:
+            #             new_key = old_key.replace('attentions.0',
+            #                                       'attentions.1')
+            #             state_dict[new_key] = state_dict[old_key].clone()
 
-            load_state_dict(self, state_dict, strict=False, logger=logger)
+            # load_state_dict(self, state_dict, strict=False, logger=logger)
+            load_checkpoint(
+                    self, self.pretrained, strict=False, logger=logger, revise_keys=[(r'^backbone\.', '')])
 
     def forward(self, x):
         """Defines the computation performed at every call."""
