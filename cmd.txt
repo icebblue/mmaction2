@@ -21,3 +21,7 @@ PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i
 PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb.py ./work_dirs/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_64.pth 4 >nohup.log 2>&1 &
 
 PORT=29666 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py ./work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb/best_acc_top1_epoch_21.pth 4 >nohup_test.log 2>&1 &
+
+
+# new commands
+python tools/train.py configs/recognition/i3d/i3d_k400-pretrained_1xb32-16x4x1-50e_ucf101-rgb.py
