@@ -23,8 +23,8 @@ model = dict(
         average_clips='prob'),
     data_preprocessor=dict(
         type='ActionDataPreprocessor',
-        mean=[127.5, 127.5, 127.5],
-        std=[127.5, 127.5, 127.5],
+        mean=[123.675, 116.28, 103.53],
+        std=[58.395, 57.12, 57.375],
         format_shape='NCTHW'))
 
 # dataset settings
@@ -59,7 +59,7 @@ val_pipeline = [
 ]
 test_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1, test_mode=True),
+    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=10, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -68,8 +68,8 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=8,
-    num_workers=1,
+    batch_size=4,
+    num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
@@ -78,8 +78,8 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=8,
-    num_workers=1,
+    batch_size=4,
+    num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -90,7 +90,7 @@ val_dataloader = dict(
         test_mode=True))
 test_dataloader = dict(
     batch_size=1,
-    num_workers=1,
+    num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
