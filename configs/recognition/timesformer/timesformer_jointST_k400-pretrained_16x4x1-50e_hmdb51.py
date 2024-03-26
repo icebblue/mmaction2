@@ -7,7 +7,7 @@ model = dict(
         type='TimeSformer',
         pretrained=  # noqa: E251
         '',  # noqa: E501
-        num_frames=16,
+        num_frames=8,
         img_size=224,
         patch_size=16,
         embed_dims=768,
@@ -40,7 +40,7 @@ file_client_args = dict(io_backend='disk')
 
 train_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomCrop', size=224),
@@ -50,7 +50,7 @@ train_pipeline = [
 ]
 val_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -59,7 +59,7 @@ val_pipeline = [
 ]
 test_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=10, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=10, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),

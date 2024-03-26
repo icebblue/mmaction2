@@ -5,7 +5,10 @@ _base_ = [
 model = dict(
     backbone=dict(
         pretrained2d=False, 
-        pretrained=''),
+        pretrained='',
+        conv1_stride_t=1,
+        pool1_stride_t=1,
+        with_pool2=False),
     cls_head=dict(num_classes=51))
 
 # dataset settings
@@ -20,7 +23,7 @@ ann_file_test = f'data/hmdb51/hmdb51_val_split_{split}_videos.txt'
 file_client_args = dict(io_backend='disk')
 train_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomCrop', size=224),
@@ -30,7 +33,7 @@ train_pipeline = [
 ]
 val_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -39,7 +42,7 @@ val_pipeline = [
 ]
 test_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=10, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=10, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),

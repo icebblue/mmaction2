@@ -5,7 +5,10 @@ _base_ = [
 model = dict(
     backbone=dict(
         pretrained2d=False, 
-        pretrained=''),
+        pretrained='/mnt/cephfs/home/zengrunhao/yangzehang/workplace/mmaction2/work_dirs/pretrained_weights/i3d_imagenet-pretrained-r50_8xb8-32x2x1-100e_kinetics400-rgb_20220812-e213c223.pth',
+        conv1_stride_t=1,
+        pool1_stride_t=1,
+        with_pool2=False),
     cls_head=dict(num_classes=101))
 
 # dataset settings
@@ -20,7 +23,7 @@ ann_file_test = f'data/ucf101/ucf101_val_split_{split}_videos.txt'
 file_client_args = dict(io_backend='disk')
 train_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomCrop', size=224),
@@ -30,7 +33,7 @@ train_pipeline = [
 ]
 val_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -39,7 +42,7 @@ val_pipeline = [
 ]
 test_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=10, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=10, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -48,7 +51,7 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=32,
+    batch_size=8,
     num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -58,7 +61,7 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=32,
+    batch_size=8,
     num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),

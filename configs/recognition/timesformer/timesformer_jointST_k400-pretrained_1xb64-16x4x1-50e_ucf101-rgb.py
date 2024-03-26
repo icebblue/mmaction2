@@ -6,8 +6,8 @@ model = dict(
     backbone=dict(
         type='TimeSformer',
         pretrained=  # noqa: E251
-        '',  # noqa: E501
-        num_frames=16,
+        '/mnt/cephfs/home/zengrunhao/yangzehang/workplace/mmaction2/work_dirs/pretrained_weights/timesformer_jointST_8xb8-8x32x1-15e_kinetics400-rgb_20220815-8022d1c0.pth',  # noqa: E501
+        num_frames=8,
         img_size=224,
         patch_size=16,
         embed_dims=768,
@@ -40,7 +40,7 @@ file_client_args = dict(io_backend='disk')
 
 train_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomCrop', size=224),
@@ -50,7 +50,7 @@ train_pipeline = [
 ]
 val_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=1, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -59,7 +59,7 @@ val_pipeline = [
 ]
 test_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=10, test_mode=True),
+    dict(type='SampleFrames', clip_len=8, frame_interval=8, num_clips=10, test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -68,8 +68,8 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=4,
-    num_workers=2,
+    batch_size=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
@@ -78,8 +78,8 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=4,
-    num_workers=2,
+    batch_size=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -90,7 +90,7 @@ val_dataloader = dict(
         test_mode=True))
 test_dataloader = dict(
     batch_size=1,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
