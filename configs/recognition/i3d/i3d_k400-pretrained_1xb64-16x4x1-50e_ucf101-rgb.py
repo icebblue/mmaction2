@@ -52,7 +52,7 @@ test_pipeline = [
 
 train_dataloader = dict(
     batch_size=8,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
@@ -62,7 +62,7 @@ train_dataloader = dict(
         pipeline=train_pipeline))
 val_dataloader = dict(
     batch_size=8,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -73,7 +73,7 @@ val_dataloader = dict(
         test_mode=True))
 test_dataloader = dict(
     batch_size=1,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -106,7 +106,7 @@ optim_wrapper = dict(
     clip_grad=dict(max_norm=40, norm_type=2))
 
 default_hooks = dict(
-    checkpoint=dict(interval=1, max_keep_ckpts=5),logger=dict(interval=50))
+    checkpoint=dict(interval=1, max_keep_ckpts=2),logger=dict(interval=50))
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically

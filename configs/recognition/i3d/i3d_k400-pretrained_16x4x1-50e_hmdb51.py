@@ -5,7 +5,7 @@ _base_ = [
 model = dict(
     backbone=dict(
         pretrained2d=False, 
-        pretrained='',
+        pretrained='/mnt/cephfs/home/zengrunhao/yangzehang/workplace/mmaction2/work_dirs/pretrained_weights/i3d_imagenet-pretrained-r50_8xb8-32x2x1-100e_kinetics400-rgb_20220812-e213c223.pth',
         conv1_stride_t=1,
         pool1_stride_t=1,
         with_pool2=False),
@@ -51,8 +51,8 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=32,
-    num_workers=2,
+    batch_size=8,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
@@ -61,8 +61,8 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=32,
-    num_workers=2,
+    batch_size=8,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -73,7 +73,7 @@ val_dataloader = dict(
         test_mode=True))
 test_dataloader = dict(
     batch_size=1,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -106,7 +106,7 @@ optim_wrapper = dict(
     clip_grad=dict(max_norm=40, norm_type=2))
 
 default_hooks = dict(
-    checkpoint=dict(interval=1, max_keep_ckpts=5),logger=dict(interval=50))
+    checkpoint=dict(interval=1, max_keep_ckpts=2),logger=dict(interval=50))
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically

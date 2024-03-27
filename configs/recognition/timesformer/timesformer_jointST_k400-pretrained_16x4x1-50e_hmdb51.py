@@ -6,7 +6,7 @@ model = dict(
     backbone=dict(
         type='TimeSformer',
         pretrained=  # noqa: E251
-        '',  # noqa: E501
+        '/mnt/cephfs/home/zengrunhao/yangzehang/workplace/mmaction2/work_dirs/pretrained_weights/timesformer_jointST_8xb8-8x32x1-15e_kinetics400-rgb_20220815-8022d1c0.pth',  # noqa: E501
         num_frames=8,
         img_size=224,
         patch_size=16,
@@ -68,8 +68,8 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=4,
-    num_workers=2,
+    batch_size=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
@@ -78,8 +78,8 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=4,
-    num_workers=2,
+    batch_size=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -90,7 +90,7 @@ val_dataloader = dict(
         test_mode=True))
 test_dataloader = dict(
     batch_size=1,
-    num_workers=2,
+    num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
@@ -110,7 +110,7 @@ test_cfg = dict(type='TestLoop')
 
 optim_wrapper = dict(
     optimizer=dict(
-        type='SGD', lr=0.001, momentum=0.9, weight_decay=5e-4, nesterov=True),
+        type='SGD', lr=0.00025, momentum=0.9, weight_decay=5e-4, nesterov=True),
     paramwise_cfg=dict(
         custom_keys={
             '.backbone.cls_token': dict(decay_mult=0.0),
@@ -130,7 +130,7 @@ param_scheduler = [
 ]
 
 default_hooks = dict(
-    checkpoint=dict(interval=1, max_keep_ckpts=5),logger=dict(interval=50))
+    checkpoint=dict(interval=1, max_keep_ckpts=2),logger=dict(interval=50))
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically

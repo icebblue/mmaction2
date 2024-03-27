@@ -110,7 +110,7 @@ test_cfg = dict(type='TestLoop')
 
 optim_wrapper = dict(
     optimizer=dict(
-        type='SGD', lr=0.001, momentum=0.9, weight_decay=5e-4, nesterov=True),
+        type='SGD', lr=0.00025, momentum=0.9, weight_decay=5e-4, nesterov=True),
     paramwise_cfg=dict(
         custom_keys={
             '.backbone.cls_token': dict(decay_mult=0.0),
@@ -130,7 +130,7 @@ param_scheduler = [
 ]
 
 default_hooks = dict(
-    checkpoint=dict(interval=1, max_keep_ckpts=5),logger=dict(interval=50))
+    checkpoint=dict(interval=1, max_keep_ckpts=2),logger=dict(interval=50))
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically
