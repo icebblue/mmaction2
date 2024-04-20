@@ -8,7 +8,7 @@ PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/top-
 
 PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb.py 4 >nohup.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_train.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb8-16x4x1-100e_ucf101-rgb.py 4 >nohup_2.log 2>&1 &
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb8-16x4x1-100e_ucf101-rgb.py 4 >nohup_test.log 2>&1 &
 
 PORT=29666 nohup bash tools/dist_train.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
 
@@ -21,3 +21,13 @@ PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i
 PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb.py ./work_dirs/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_64.pth 4 >nohup.log 2>&1 &
 
 PORT=29666 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py ./work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb/best_acc_top1_epoch_21.pth 4 >nohup_test.log 2>&1 &
+
+configs/recognition/r2plus1d/r2plus1d_r34_4xb8-16x4x1-100e_ucf101-rgb.py
+//3.20
+//top_i3d
+
+PORT=29666 bash tools/dist_train.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py 4 >nohup_1.log 2>&1
+
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py work_dirs/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_74.pth 4 >nohup_test.log 2>&1 &
+
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb4-32x2x1-100e_ucf101-rgb.py work_dirs/r2plus1d_r34_4xb4-32x2x1-100e_ucf101-rgb/best_acc_top1_epoch_92.pth 4 >nohup_test.log 2>&1 &

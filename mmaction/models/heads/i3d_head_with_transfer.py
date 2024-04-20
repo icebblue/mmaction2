@@ -49,6 +49,16 @@ def build_transfer(type: str,
             nn.LayerNorm(t_channels),
             nn.GELU(),)
         transfer = nn.Sequential(*(list(transfer.children()) + list(additional.children())))
+
+    if type == 'swin_proj':
+        transfer = nn.Sequential(
+            SwinFeatureProjector(),
+            nn.utils.parametrizations.orthogonal(nn.Linear(s_channels, t_channels, bias=False)),
+            conv1x1(t_channels, t_channels),
+            SwinFeatureProjector(),
+            nn.LayerNorm(t_channels),
+            nn.GELU(),)
+
         
     return transfer
 
@@ -108,10 +118,10 @@ class I3DHeadWithTransfer(BaseHead):
 
 
     def forward(self, x: Tensor, **kwargs) -> Tensor:
+        if self.transfer is not None:
+            x = self.transfer(x)
 
-        x = self.transfer(x)
-
-        if self.transfer_config["type"] == 'swin':
+        if self.transfer_config["type"] == 'swin' or self.transfer_config["type"]== 'swin_proj':
             x = rearrange(x, 'b d h w c -> b c d h w').contiguous()
 
         # [N, in_channels, 4, 7, 7]

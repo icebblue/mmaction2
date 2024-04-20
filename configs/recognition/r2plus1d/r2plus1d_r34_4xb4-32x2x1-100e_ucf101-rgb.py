@@ -3,7 +3,11 @@ _base_ = [
     '../../_base_/default_runtime.py'
 ]
 
-model = dict(cls_head=dict(num_classes=101))
+model = dict(
+        backbone=dict(
+        pretrained2d=False, 
+        pretrained='https://download.openmmlab.com/mmaction/v1.0/recognition/r2plus1d/r2plus1d_r34_8xb8-8x8x1-180e_kinetics400-rgb/r2plus1d_r34_8xb8-8x8x1-180e_kinetics400-rgb_20220812-47cfe041.pth'),
+cls_head=dict(num_classes=101))
 
 # dataset settings
 dataset_type = 'VideoDataset'
@@ -18,7 +22,7 @@ ann_file_test = f'data/ucf101/ucf101_val_split_{split}_videos.txt'
 file_client_args = dict(io_backend='disk')
 train_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1),
+    dict(type='SampleFrames', clip_len=32, frame_interval=2, num_clips=1),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomCrop', size=224),
@@ -30,8 +34,8 @@ val_pipeline = [
     dict(type='DecordInit', **file_client_args),
     dict(
         type='SampleFrames',
-        clip_len=16,
-        frame_interval=4,
+        clip_len=32,
+        frame_interval=2,
         num_clips=1,
         test_mode=True),
     dict(type='DecordDecode'),
@@ -44,9 +48,9 @@ test_pipeline = [
     dict(type='DecordInit', **file_client_args),
     dict(
         type='SampleFrames',
-        clip_len=16,
-        frame_interval=4,
-        num_clips=1,
+        clip_len=32,
+        frame_interval=2,
+        num_clips=10,
         test_mode=True),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
@@ -56,7 +60,7 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=8,
+    batch_size=4,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -66,7 +70,7 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=8,
+    batch_size=4,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
