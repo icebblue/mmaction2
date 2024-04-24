@@ -6,7 +6,7 @@ _base_ = [
 model = dict(
         backbone=dict(
         pretrained2d=False, 
-        pretrained='https://download.openmmlab.com/mmaction/v1.0/recognition/r2plus1d/r2plus1d_r34_8xb8-8x8x1-180e_kinetics400-rgb/r2plus1d_r34_8xb8-8x8x1-180e_kinetics400-rgb_20220812-47cfe041.pth'),
+        pretrained='https://download.openmmlab.com/mmaction/v1.0/recognition/r2plus1d/r2plus1d_r34_8xb8-32x2x1-180e_kinetics400-rgb/r2plus1d_r34_8xb8-32x2x1-180e_kinetics400-rgb_20220812-4270588c.pth'),
 cls_head=dict(num_classes=101))
 
 # dataset settings
@@ -60,7 +60,7 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=4,
+    batch_size=16,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -70,7 +70,7 @@ train_dataloader = dict(
         data_prefix=dict(video=data_root),
         pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=4,
+    batch_size=16,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
