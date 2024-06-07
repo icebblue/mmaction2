@@ -23,7 +23,7 @@ ann_file_test = f'data/ucf101/ucf101_val_split_{split}_videos.txt'
 file_client_args = dict(io_backend='disk')
 train_pipeline = [
     dict(type='DecordInit', **file_client_args),
-    dict(type='SampleFrames', clip_len=64, frame_interval=1, num_clips=1),
+    dict(type='SampleFrames', clip_len=16, frame_interval=4, num_clips=1),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomCrop', size=224),
@@ -35,8 +35,8 @@ val_pipeline = [
     dict(type='DecordInit', **file_client_args),
     dict(
         type='SampleFrames',
-        clip_len=64,
-        frame_interval=1,
+        clip_len=16,
+        frame_interval=4,
         num_clips=1,
         test_mode=True),
     dict(type='DecordDecode'),
@@ -49,8 +49,8 @@ test_pipeline = [
     dict(type='DecordInit', **file_client_args),
     dict(
         type='SampleFrames',
-        clip_len=64,
-        frame_interval=1,
+        clip_len=16,
+        frame_interval=4,
         num_clips=10,
         test_mode=True),
     dict(type='DecordDecode'),
@@ -106,7 +106,20 @@ optim_wrapper = dict(
     optimizer=dict(
         type='AdamW', lr=base_lr, betas=(0.9, 0.999), weight_decay=0.02),
     paramwise_cfg=dict(norm_decay_mult=0.0, bias_decay_mult=0.0))
+# optim_wrapper = dict(
+#     optimizer=dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001),
+#     clip_grad=dict(max_norm=40, norm_type=2))
 
+# optim_wrapper = dict(
+#     type='AmpOptimWrapper',
+#     optimizer=dict(
+#         type='AdamW', lr=1e-3, betas=(0.9, 0.999), weight_decay=0.02),
+#     constructor='SwinOptimWrapperConstructor',
+#     paramwise_cfg=dict(
+#         absolute_pos_embed=dict(decay_mult=0.),
+#         relative_position_bias_table=dict(decay_mult=0.),
+#         norm=dict(decay_mult=0.),
+#         backbone=dict(lr_mult=0.1)))
 param_scheduler = [
     dict(
         type='LinearLR',

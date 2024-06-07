@@ -16,7 +16,7 @@ from mmengine.dataset import Compose
 from mmaction.apis import inference_recognizer, init_recognizer
 
 FONTFACE = cv2.FONT_HERSHEY_COMPLEX_SMALL
-FONTSCALE = 1
+FONTSCALE = 2
 THICKNESS = 1
 LINETYPE = 1
 
@@ -268,3 +268,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# python demo/long_video_demo.py configs/recognition/i3d/i3d_imagenet-pretrained-r50_8xb8-32x2x1-100e_kinetics400-rgb.py \
+#   https://download.openmmlab.com/mmaction/v1.0/recognition/i3d/i3d_imagenet-pretrained-r50_8xb8-32x2x1-100e_kinetics400-rgb/i3d_imagenet-pretrained-r50_8xb8-32x2x1-100e_kinetics400-rgb_20220812-e213c223.pth videos/389149242-1-16.mp4 tools/data/kinetics/label_map_k400.txt videos/outputs/389149242-1-16-i3d.mp4 \
+# --input-step 3 --threshold 0.2 --label-color 255 255 0 --font-scale 3

@@ -10,24 +10,34 @@ PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_
 
 PORT=29666 nohup bash tools/dist_train.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb8-16x4x1-100e_ucf101-rgb.py 4 >nohup_test.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_train.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb_unshuffle.py 4 >nohup.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb16-16x4x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+CUDA_VISIBLE_DEVICES=0,1,2,3,5,6,7 PORT=29777 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb.py 7 --work-dir work_dirs/top-i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb_05151558 >nohup_1.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_train.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb.py 4 >nohup.log 2>&1 &
+PORT=29666 nohup bash tools/dist_train.sh configs/recognition/swin/swin-tiny-p244-w877_in1k-pre_4xb4-16x4x1-50e_ucf101-rgb.py 4 >nohup.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py ../mmrazor/work_dirs/kd_logits_i3d_top-i3d_4xb4-64x1x1_ucf101/best_acc_top1_epoch_93.pth 4 >nohup_1.log 2>&1 &
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb4-32x2x1-100e_ucf101-rgb.py work_dirs/r2plus1d_r34_4xb4-32x2x1-100e_ucf101-rgb/best_acc_top1_epoch_92.pth 4 --dump train_datasets_r2plus1d_93.pkl >nohup_1.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb.py ./work_dirs/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_64.pth 4 >nohup.log 2>&1 &
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb.py work_dirs/top-i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb_05151558/best_acc_top1_epoch_57.pth 4 >nohup.log 2>&1 &
 
-PORT=29666 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py ./work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb/best_acc_top1_epoch_21.pth 4 >nohup_test.log 2>&1 &
+PORT=29777 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb_test_in_train_dataset.py work_dirs/i3d_imagenet-pre_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_64.pth 4 --dump train_datasets_i3d.pkl >nohup_test.log 2>&1 &
+PORT=29777 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb_test_in_train_dataset.py work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb_000/best_acc_top1_epoch_49.pth 4 --dump train_datasets_swin.pkl >nohup_test.log 2>&1 &
 
+work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb_000/best_acc_top1_epoch_49.pth
 configs/recognition/r2plus1d/r2plus1d_r34_4xb8-16x4x1-100e_ucf101-rgb.py
 //3.20
 //top_i3d
 
-PORT=29666 bash tools/dist_train.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py 4 >nohup_1.log 2>&1
+PORT=29777 bash tools/dist_train.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb.py 4 >nohup_1.log 2>&1
 
-PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb.py work_dirs/top-i3d_from-scratch_4xb4-64x1x1-100e_ucf101-rgb/best_acc_top1_epoch_74.pth 4 >nohup_test.log 2>&1 &
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-10e_ucf101-rgb/best_acc_top1_epoch_10.pth 4 >nohup_test.log 2>&1 &
+/mnt/cephfs/home/zengrunhao/pengying/mmrazor/work_dirs/kd_logits_i3d_top-i3d_4xb16_ucf101/best_acc_top1_epoch_78.pth
+PORT=29666 nohup bash tools/dist_test.sh configs/recognition/inception_i3d/top-i3d_from-scratch_4xb16-16x4x1-100e_ucf101-rgb.py /mnt/cephfs/home/zengrunhao/pengying/mmrazor/work_dirs/kd_logits_i3d_top-i3d_4xb16_ucf101/best_acc_top1_epoch_78.pth 4 --dump train_datasets_topi3d_i3d_kd >nohup_test.log 2>&1 &
 
 PORT=29666 nohup bash tools/dist_train.sh configs/recognition/r2plus1d/r2plus1d_r34_4xb4-32x2x1-100e_ucf101-rgb.py work_dirs/r2plus1d_r34_4xb4-32x2x1-100e_ucf101-rgb/best_acc_top1_epoch_92.pth 4 >nohup_test.log 2>&1 &
+
+
+python demo/demo.py configs/recognition/swin/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb.py \
+    work_dirs/swin-tiny-p244-w877_k400-pre_4xb4-16x4x1-50e_ucf101-rgb_000/best_acc_top1_epoch_49.pth \
+    demo/demo.mp4 tools/data/ucf101/label_map.txt
+

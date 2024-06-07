@@ -151,3 +151,7 @@ mmaction/tools/*
 mmaction/.mim
 
 work_dirs
+demo
+videos
+edit_pth.py
+vis_pkl.py

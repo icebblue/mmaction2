@@ -77,6 +77,14 @@ class ActionDataSample(BaseDataElement):
         """Set ``pred_label``."""
         self.set_field(format_label(value), 'pred_label', dtype=torch.Tensor)
         return self
+    def set_video_index(self, value: int) -> 'ActionDataSample':
+        """Set ``video_index``."""
+        self.set_field(value, 'video_index')
+        return self
+    def set_predsT_label(self, value: LABEL_TYPE) -> 'ActionDataSample':
+        """Set ``pred_label``."""
+        self.set_field(value, 'predsT_label', dtype=torch.Tensor)
+        return self
 
     def set_pred_score(self, value: SCORE_TYPE) -> 'ActionDataSample':
         """Set score of ``pred_label``."""

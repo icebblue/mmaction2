@@ -2,7 +2,7 @@
 from .base import BaseHead
 from .feature_head import FeatureHead
 from .gcn_head import GCNHead
-from .i3d_head import I3DHead
+from .i3d_head import I3DHead, Swin2I3DHead
 from .mvit_head import MViTHead
 from .omni_head import OmniHead
 from .rgbpose_head import RGBPoseHead
@@ -20,5 +20,5 @@ from .i3d_head_with_transfer import I3DHeadWithTransfer
 __all__ = [
     'BaseHead', 'GCNHead', 'I3DHead', 'MViTHead', 'OmniHead', 'SlowFastHead',
     'TPNHead', 'TRNHead', 'TSMHead', 'TSNAudioHead', 'TSNHead',
-    'TimeSformerHead', 'UniFormerHead', 'RGBPoseHead', 'X3DHead', 'FeatureHead', 'I3DHeadWithTransfer'
+    'TimeSformerHead', 'UniFormerHead', 'RGBPoseHead', 'X3DHead', 'FeatureHead', 'I3DHeadWithTransfer' ,'Swin2I3DHead'
 ]
